@@ -141,6 +141,6 @@ public class App {
   public static void Main() {
 
     var asm = new AsmRPN();
-    asm.evaluate("get get and putln");
+    asm.evaluate("get putln 1 sub 1 jif");
   }
 }
