@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class AsmRPN {
   private Dictionary<String, Action> actions;
   private Stack<long> stack;
+  private long[] slots;
   private int pc;
 
   public AsmRPN() {
@@ -28,9 +29,12 @@ public class AsmRPN {
       {"not", this.Not},
       {"jump", this.Jump},
       {"jif", this.Jif},
+      {"store", this.Store},
+      {"load", this.Load},
     };
 
     stack = new Stack<long>();
+    slots = new long[10];
   }
 
   private void Add() {
@@ -116,6 +120,16 @@ public class AsmRPN {
 
   private void Get() {
     stack.Push(long.Parse(Console.ReadLine()));
+  }
+
+  private void Store() {
+    int slot = Convert.ToInt32(stack.Pop());
+    slots[slot] = stack.Peek();
+  }
+
+  private void Load() {
+    int slot = Convert.ToInt32(stack.Pop());
+    stack.Push(slots[slot]);
   }
 
   public long evaluate(String code) {
